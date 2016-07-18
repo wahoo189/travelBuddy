@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <title>Travel Buddy | Home Page</title>
+</head>
+<body>
+  <div class="container">
+    <!-- <div>
+    <ul class="nav navbar-nav">
+    <li class="nav-item"><a href="/">Test App</a></li>
+    <li class="nav-item active"><a href="/">Home</a></li>
+    <li class="nav-item"><a href="/signin">Login</a></li>
+  </ul>
+</div> -->
+<br>
+<br>
+<!-- <a href="/clearUsers">Reset Users DB</a>
+<a href="/listUsers">List Users</a> -->
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}
+  <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+<h1>
+  Welcome!
+</h1>
+<!-- <p>We're going to build a cool application using MVC framework! This application was built with the Village 88 folks!</p>
+<p>
+<a class="btn btn-primary btn-large" href="/signin">
+Start
+</a>
+</p> -->
+
+<div class="row">
+  <div class="col-md-5">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Register</div>
+      <div class="panel-body">
+        <form action="/register" method="post" class="form-horizontal">
+          {% csrf_token %}
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Name:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="name">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Username:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="userName" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Password:</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control" name="password">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Confirm Password:</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control" name="passwordConfirm">
+            </div>
+          </div>
+
+          <div class="text-right">
+            <input class="btn btn-primary" type="submit" value="Register">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5">
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Login</div>
+      <div class="panel-body">
+        <form action="/login" method="post" class="form-horizontal">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Username:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="userName">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-sm-5" for="">Password:</label>
+            <div class="col-sm-6">
+              <input type="password" class="form-control" name="password">
+            </div>
+          </div>
+          
+          <div class="text-right">
+            <input class="btn btn-primary" type="submit" value="Login">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+</body>
+</html>

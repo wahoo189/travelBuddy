@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <title>Travel Buddy | Your Travels</title>
+</head>
+<body>
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="nav-item"><a href="/logout">Logout</a></li>
+      <!-- <li class="nav-item"><a href="/">Test App</a></li>
+      <li class="nav-item active"><a href="#">Dashboard</a></li>
+      <li class="nav-item"><a href="/users/edit/{{User.id}}">Profile</a></li> -->
+    </ul>
+    <br />
+    <br />
+    <br />
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <!-- <div>
+      {% if User.access_level == 'ADMIN' %}
+      <div class="row">
+        <h2>Manage Users</h2>
+        <a class="btn btn-primary pull-right" href="/users/new">Add New</a>
+      </div>
+      {% else %}
+      <h2>All Users</h2>
+      {% endif %}
+    </div> -->
+
+    <!-- <p>Loggin In Currently: ID: {{ User.id }} | Role: {{ User.access_level }} | {{ User.first_name }} {{ User.last_name }} | {{ User.emailAddress }}</p> -->
+    <h1>Hello {{ User.username }}!</h1>
+    <h3>Your Trip Schedules</h3>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Plan</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for trip in Trips %}
+        <tr>
+          <td><a href="/tripDetail/{{trip.id}}">{{trip.destination}}</a></td>
+          <td>{{trip.start_date}}</td>
+          <td>{{trip.end_date}}</td>
+          <td>{{trip.plan}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h3>Other User's Travel Plans</h3>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Destination</th>
+          <th>Travel Start Date</th>
+          <th>Travel End Date</th>
+          <th>Do you want to join?</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for othersTrip in OthersTrips %}
+        <tr>
+          <td>{{othersTrip.name}}</td>
+          <td>{{othersTrip.destination}}</td>
+          <td>{{othersTrip.start_date}}</td>
+          <td>{{othersTrip.end_date}}</td>
+          <td><a href="/join/{{othersTrip.id}}">Join</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+      <a href="/add">Add Travel Plan</a>
+    </div>
+  <!-- <script type="text/javascript">
+  function confirmDelete(id, userName)
+  {
+    if(confirm("Are you sure you want to delete " + userName + " from the system?"))
+    {
+      //alert("#form" + id);
+      $("#form" + id).submit();
+    }
+  }
+  </script> -->
+</body>
+</html>

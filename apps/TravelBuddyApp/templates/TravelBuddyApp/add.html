@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+  <title>Travel Buddy | Your Travels</title>
+
+  <script>
+  $( function() {
+    $( "#dpFrom" ).datepicker();
+    $( "#dpTo" ).datepicker();
+  } );
+  </script>
+</head>
+<body>
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="nav-item"><a href="/logout">Logout</a></li>
+      <li class="nav-item"><a href="/travels">Home</a></li>
+      <!-- <li class="nav-item"><a href="/">Test App</a></li>
+      <li class="nav-item active"><a href="#">Dashboard</a></li>
+      <li class="nav-item"><a href="/users/edit/{{User.id}}">Profile</a></li> -->
+    </ul>
+    <br>
+    <br>
+    <br>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>Add a Trip</h1>
+
+    <div class="panel panel-default">
+      <!-- <div class="panel-heading">Register</div> -->
+      <div class="panel-body">
+        <form action="/addTravel" method="post" class="form-horizontal">
+          {% csrf_token %}
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="">Destination:</label>
+            <div class="col-sm-3">
+              <input type="text" class="form-control" name="destination">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="">Description:</label>
+            <div class="col-sm-6">
+              <textarea class="form-control" name="description" rows="5"/></textarea>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="">Travel Date From:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="start_date" id="dpFrom">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="control-label col-sm-2" for="">Travel Date To:</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" name="end_date" id="dpTo">
+            </div>
+          </div>
+
+          <div class="text-right">
+            <input class="btn btn-primary" type="submit" value="Add">
+          </div>
+        </form>
+      </div>
+    </div>
+
+    </div>
+  <!-- <script type="text/javascript">
+  function confirmDelete(id, userName)
+  {
+    if(confirm("Are you sure you want to delete " + userName + " from the system?"))
+    {
+      //alert("#form" + id);
+      $("#form" + id).submit();
+    }
+  }
+  </script> -->
+</body>
+</html>

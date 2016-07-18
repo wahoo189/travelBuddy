@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <title>Travel Buddy | Your Travels</title>
+</head>
+<body>
+  <div class="container">
+    <ul class="nav navbar-nav">
+      <li class="nav-item"><a href="/logout">Logout</a></li>
+      <li class="nav-item"><a href="/travels">Home</a></li>
+      <!-- <li class="nav-item"><a href="/">Test App</a></li>
+      <li class="nav-item active"><a href="#">Dashboard</a></li>
+      <li class="nav-item"><a href="/users/edit/{{User.id}}">Profile</a></li> -->
+    </ul>
+    <br>
+    <br>
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    <h1>Trip Detail</h1>
+
+    <h3>{{trip.destination}}</h3>
+    <p>Planned by: {{trip.user_set.name}}</p>
+    <p>Description: {{trip.plan}}</p>
+    <p>Travel Date From: {{trip.start_date}}</p>
+    <p>ravel Date To: {{trip.end_date}}</p>
+
+    <h3>Other Users Joining the Trip</h3>
+
+    </div>
+</body>
+</html>
