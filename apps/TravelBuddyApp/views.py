@@ -44,9 +44,14 @@ def register(request):
         return redirect('/')
 
 def travels(request):
-    user = User.objects.get(id=request.session[LOGGED_IN_USER_ID])
-    query = "SELECT * FROM TravelBuddyApp_Trip WHERE user_id != " + str(user.id) + " and id not in (SELECT trip_id from TravelBuddyApp_Trip_Join where attendee_id = " + str(user.id) + " )"
-    availableTrips = Trip.objects.raw(query)
+    availableTrips = []
+    
+    try:
+        user = User.objects.get(id=request.session[LOGGED_IN_USER_ID])
+        query = "SELECT * FROM TravelBuddyApp_Trip WHERE user_id != " + str(user.id) + " and id not in (SELECT trip_id from TravelBuddyApp_Trip_Join where attendee_id = " + str(user.id) + " )"
+        availableTrips = Trip.objects.raw(query)
+    except Exception,e:
+        availableTrips
 
     context = {
         "User" : user,
