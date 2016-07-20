@@ -11,7 +11,7 @@ class User(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 class Trip(models.Model):
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name='Owner', default=-1)
     destination = models.CharField(max_length=100)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
@@ -20,7 +20,7 @@ class Trip(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 class Trip_Join(models.Model):
-    owner = models.ForeignKey(User)
-    #attending = models.ForeignKey(User)
+    trip = models.ForeignKey(Trip, related_name='trip', default=-1)
+    attendee = models.ForeignKey(User, related_name='attendee', default=-1)
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)

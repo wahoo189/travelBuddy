@@ -30,17 +30,10 @@
     </ul>
     {% endif %}
 
-    <h1>Trip Detail</h1>
+    <h1>All Attendees</h1>
 
-    <h3>{{trip.destination}}</h3>
-    <p>Planned by: {{trip.user.name}}</p>
-    <p>Description: {{trip.plan}}</p>
-    <p>Travel Date From: {{trip.start_date}}</p>
-    <p>Travel Date To: {{trip.end_date}}</p>
-
-    <h3>Other Users Joining the Trip</h3>
-    {% for attendee in attendees %}
-      <p>{{attendee.attendee.name}}</p>
+    {% for attendee in Attendees %}
+      <p>Trip: {{attendee.trip.destination}} | Attendee: {{attendee.attendee.username}}</p>
     {% endfor %}
     </div>
 </body>

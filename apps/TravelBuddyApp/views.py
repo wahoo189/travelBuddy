@@ -15,8 +15,13 @@ def main(request):
 
 def login(request):
     try:
+        if len(request.POST['userName']) < 1 or len(request.POST['password']) < 1:
+            messages.add_message(request, messages.INFO, 'Username and Password cannot be blank!')
+            return redirect('/')
+
         print "ATTEMPTING TO LOG IN THIS USER: ", request.POST['userName']
         user = User.objects.get(username=request.POST['userName'])
+
         if bcrypt.hashpw(request.POST['password'].encode(), user.password.encode()) == user.password.encode():
             request.session[LOGGED_IN_USER_ID] = user.id
             return redirect('/travels')
@@ -38,17 +43,24 @@ def register(request):
         messages.add_message(request, messages.INFO, 'An error occurred, please try again.')
         return redirect('/')
 
-
 def travels(request):
     user = User.objects.get(id=request.session[LOGGED_IN_USER_ID])
+    query = "SELECT * FROM TravelBuddyApp_Trip WHERE user_id != " + str(user.id) + " and id not in (SELECT trip_id from TravelBuddyApp_Trip_Join where attendee_id = " + str(user.id) + " )"
+    availableTrips = Trip.objects.raw(query)
+
     context = {
         "User" : user,
         "Trips" : Trip.objects.filter(user=user),
-        "OthersTrips" : Trip.objects.all().exclude(user=user)
+        "Attending" : Trip_Join.objects.filter(attendee=user)
+        , "OthersTrips" : availableTrips
     }
     return render(request, APP_NAME+'/travels.html', context)
 
 def join(request, id):
+    user = User.objects.get(id=request.session[LOGGED_IN_USER_ID])
+    trip = Trip.objects.get(id=id)
+    Trip_Join.objects.create(trip=trip, attendee=user)
+
     messages.add_message(request, messages.INFO, 'You are joining trip ' + str(id))
     return redirect('/travels')
 
@@ -85,13 +97,25 @@ def addTravel(request):
     return redirect('/travels')
 
 def tripDetail(request, id):
-    context = {"trip" : Trip.objects.get(id=id)}
+    attendees = None
+    try:
+        attendees = Trip_Join.objects.filter(trip=id)#.exclude(attendee=user)
+    except:
+        pass
+
+    context = {
+        "trip" : Trip.objects.get(id=id),
+        "attendees" : attendees
+        }
     return render(request, APP_NAME+'/tripDetail.html', context)
 
 def listUsers(request):
     context = {"Users" : User.objects.all()}
     return render(request, APP_NAME+'/listUsers.html', context)
 
+def listAttendees(request):
+    context = {"Attendees" : Trip_Join.objects.all()}
+    return render(request, APP_NAME+'/listAttendees.html', context)
 
 # ===================
 # INTERNAL FUNCTIONS:
@@ -113,8 +137,6 @@ def tryCreateUser(request):
 
             newUser = User.objects.create(name=request.POST['name'], username=request.POST['userName'], password=bcryptedPW)
 
-            # print("NEW USER IS:", newUser)
-            # context = {"User" : newUser}
             return True
 
         else:
@@ -164,29 +186,8 @@ def registrationValidation(request):
             print("Name values cannot contain numbers!")
             errorsExist = True
 
-    # Email should be a valid email
-    	# if len(request.POST['email']) < 1:
-        #     messages.add_message(request, messages.INFO, 'Email cannot be blank!')
-        #     print("Email cannot be blank!")
-        #     errorsExist = True
-    	# elif not EMAIL_REGEX.match(request.POST['email']):
-        #     messages.add_message(request, messages.INFO, 'Invalid Email Address!')
-        #     print("Invalid Email Address!")
-        #     errorsExist = True
-
         if not validatePassword(request, request.POST['password'], request.POST['passwordConfirm']):
             errorsExist = True
-
-    # Validate birthdate
-    	# try:
-    	# 	DOB = datetime.datetime.strptime(request.POST['DOB'], '%Y-%m-%d')
-    	# 	if DOB > datetime.datetime.now():
-    	# 		print("Date of birth must be before today")
-    	# 		errorsExist = True
-        #
-    	# except ValueError:
-    	# 	print("Incorrect data format, should be YYYY-MM-DD")
-    	# 	errorsExist = True
 
     # No errors?
     	if not errorsExist:
@@ -197,5 +198,3 @@ def registrationValidation(request):
         print "ERROR: ", str(e)
 
     return not errorsExist
-    #context = { "Emails" : Email.objects.all(), "Result" : result }
-    #return render(request, "appCourses/results.html", context)

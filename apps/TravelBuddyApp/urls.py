@@ -8,6 +8,7 @@ urlpatterns = [
     , url(r'^logout$', views.logout)
     , url(r'^travels$', views.travels)
     , url(r'^listUsers$', views.listUsers)
+    , url(r'^listAttendees$', views.listAttendees)
     , url(r'^add$', views.add)
     , url(r'^addTravel$', views.addTravel)
     , url(r'^join/(?P<id>\d+)$', views.join)
