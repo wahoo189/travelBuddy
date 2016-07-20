@@ -51,6 +51,7 @@ def travels(request):
         query = "SELECT * FROM TravelBuddyApp_Trip WHERE user_id != " + str(user.id) + " and id not in (SELECT trip_id from TravelBuddyApp_Trip_Join where attendee_id = " + str(user.id) + " )"
         availableTrips = Trip.objects.raw(query)
     except Exception,e:
+        pass # if no trips are available, that's ok.
 
     context = {
         "User" : user,
