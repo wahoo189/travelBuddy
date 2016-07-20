@@ -71,16 +71,15 @@
         </tr>
       </thead>
       <tbody>
-        
-        <!-- { % for othersTrip in OthersTrips % } -->
-        <!-- <tr>
+        {% for othersTrip in OthersTrips %}
+        <tr>
           <td>{{othersTrip.user.username}}</td>
           <td><a href="/tripDetail/{{othersTrip.id}}">{{othersTrip.destination}}</a></td>
           <td>{{othersTrip.start_date}}</td>
           <td>{{othersTrip.end_date}}</td>
           <td><a href="/join/{{othersTrip.id}}">Join</a></td>
-        </tr> -->
-        <!-- { % endfor % } -->
+        </tr>
+        {% endfor %}
       </tbody>
     </table>
     {% endif %}
