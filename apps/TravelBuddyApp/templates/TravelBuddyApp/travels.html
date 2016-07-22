@@ -49,7 +49,7 @@
         {% endfor %}
         {% for attending in Attending %}
         <tr>
-          <td><a href="/tripDetail/{{trip.id}}">{{attending.trip.destination}}</a></td>
+          <td><a href="/tripDetail/{{attending.trip.id}}">{{attending.trip.destination}}</a></td>
           <td>{{attending.trip.start_date}}</td>
           <td>{{attending.trip.end_date}}</td>
           <td>{{attending.trip.plan}}</td>
